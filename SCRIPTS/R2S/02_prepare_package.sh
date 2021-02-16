@@ -316,6 +316,7 @@ svn co https://github.com/immortalwrt/immortalwrt/branches/master/package/ntlf9t
 # V2Ray
 git clone -b master --depth 1 https://github.com/kuoruan/openwrt-v2ray.git package/new/v2ray-core
 git clone -b legacy --depth 1 https://github.com/kuoruan/luci-app-v2ray.git package/new/luci-app-v2ray
+git clone -b master --depth 1 https://github.com/kuoruan/openwrt-upx.git package/new/openwrt-upx
 # N2N
 svn co https://github.com/ntop/n2n/branches/2.8-stable/packages/openwrt package/new/n2n
 #Docker
