@@ -14,7 +14,7 @@ sed -i 's/O2/O2/g' ./rules.mk
 #更新feed
 ./scripts/feeds update -a
 ./scripts/feeds install -a -f
-
+rm -f ./package/feeds/packages/pcre
 ##R2S相关
 wget -P target/linux/generic/pending-5.4 https://github.com/immortalwrt/immortalwrt/raw/master/target/linux/generic/pending-5.4/312-arm64-cpuinfo-Add-model-name-in-proc-cpuinfo-for-64bit-ta.patch
 #3328 add idle
