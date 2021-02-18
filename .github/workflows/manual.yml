@@ -15,7 +15,8 @@ on:
         default: 'World'
         # Input has to be provided for the workflow to run
         required: true
-
+env:
+  FLOW_ENV: xixi-haha
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "greet"
@@ -27,4 +28,4 @@ jobs:
     steps:
     # Runs a single command using the runners shell
     - name: Send greeting
-      run: echo "Hello ${{ github.event.inputs.name }} $GITHUB_WORKSPACE"
+      run: echo "Hello ${{ github.event.inputs.name }} $FLOW_ENV"
