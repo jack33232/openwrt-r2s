@@ -26,6 +26,12 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    # Runs a single command using the runners shell
+    - name: Checkout
+      uses: actions/checkout@v2
     - name: Send greeting
-      run: echo "Hello ${{ github.event.inputs.name }} $FLOW_ENV"
+      run: |
+        ls -l ${GITHUB_WORKSPACE}/SCRIPTS/06_cleaning.sh
+        echo "Hello ${{ github.event.inputs.name }} $FLOW_ENV"
+        echo '::set-output name=release_tag::R2S-${{ github.event.inputs.name }}'
+    - name: Test Output
+      run: echo '${{ steps.assemble_artifact.outputs.release_tag }}'
