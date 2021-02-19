@@ -407,7 +407,7 @@ ln -sf ../../../feeds/packages/libs/libwslay ./package/feeds/packages/libwslay
 #阿里DDNS
 # svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-aliddns package/new/luci-app-aliddns
 #翻译及部分功能优化
-# cp -rf ../PATCH/duplicate/addition-trans-zh-r2s ./package/lean/lean-translate
+cp -rf ../PATCH/duplicate/addition-trans-zh-r2s ./package/lean/lean-translate
 #WOL
 # svn co https://github.com/sundaqiang/openwrt-packages/trunk/luci-app-services-wolplus package/new/luci-app-services-wolplus
 
@@ -447,7 +447,5 @@ cp -f ../PATCH/new/script/fuck package/base-files/files/usr/bin/fuck
 sed -i 's/16384/65536/g' package/kernel/linux/files/sysctl-nf-conntrack.conf
 #删除已有配置
 rm -rf .config
-#预配置一些插件
-cp -rf ../PATCH/R2S/files ./files
 
 exit 0
