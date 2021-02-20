@@ -177,7 +177,7 @@ svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-adbyby-p
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/adbyby package/lean/adbyby
 #访问控制
 #svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-accesscontrol package/lean/luci-app-accesscontrol
-cp -rf ../PATCH/duplicate/luci-app-control-weburl ./package/new/luci-app-control-weburl
+# cp -rf ../PATCH/duplicate/luci-app-control-weburl ./package/new/luci-app-control-weburl
 #AutoCore
 svn co https://github.com/immortalwrt/immortalwrt/branches/master/package/lean/autocore package/lean/autocore
 svn co https://github.com/immortalwrt/packages/trunk/utils/coremark feeds/packages/utils/coremark
