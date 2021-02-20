@@ -41,15 +41,15 @@ wget -P package/base-files/files/etc/init.d https://github.com/immortalwrt/immor
 # cp -rf ../openwrt-lienol/package/network/fullconenat ./package/network/fullconenat
 #（从这行开始接下来3个操作全是和SFE相关的，不需要可以一并注释掉，但极不建议
 # Patch Kernel 以支援SFE
-# pushd target/linux/generic/hack-5.4
-# wget https://github.com/coolsnowwolf/lede/raw/master/target/linux/generic/hack-5.4/953-net-patch-linux-kernel-to-support-shortcut-fe.patch
-# popd
+pushd target/linux/generic/hack-5.4
+wget https://github.com/coolsnowwolf/lede/raw/master/target/linux/generic/hack-5.4/953-net-patch-linux-kernel-to-support-shortcut-fe.patch
+popd
 # Patch LuCI 以增添SFE开关
-# patch -p1 < ../PATCH/new/package/luci-app-firewall_add_sfe_switch.patch
+patch -p1 < ../PATCH/new/package/luci-app-firewall_add_sfe_switch.patch
 # SFE 相关组件
-# svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/shortcut-fe package/lean/shortcut-fe
-# svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/fast-classifier package/lean/fast-classifier
-# cp -f ../PATCH/duplicate/shortcut-fe ./package/base-files/files/etc/init.d
+svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/shortcut-fe package/lean/shortcut-fe
+svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/fast-classifier package/lean/fast-classifier
+cp -f ../PATCH/duplicate/shortcut-fe ./package/base-files/files/etc/init.d
 
 ##获取额外package
 #（不用注释这里的任何东西，这不会对提升action的执行速度起到多大的帮助
@@ -271,6 +271,7 @@ svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/ipv6-helper packa
 #WOL
 # svn co https://github.com/sundaqiang/openwrt-packages/trunk/luci-app-services-wolplus package/new/luci-app-services-wolplus
 # V2Ray
+git clone -b master --depth 1 https://github.com/kuoruan/openwrt-upx.git package/new/openwrt-upx
 git clone -b master --depth 1 https://github.com/kuoruan/openwrt-v2ray.git package/new/v2ray-core
 git clone -b legacy --depth 1 https://github.com/kuoruan/luci-app-v2ray.git package/new/luci-app-v2ray
 # N2N
