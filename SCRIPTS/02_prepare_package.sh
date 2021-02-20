@@ -54,6 +54,11 @@ wget -P package/base-files/files/etc/init.d https://github.com/immortalwrt/immor
 ##获取额外package
 #（不用注释这里的任何东西，这不会对提升action的执行速度起到多大的帮助
 #（不需要的包直接修改seed就好
+#upx
+sed -i '/patchelf pkgconf/i\tools-y += ucl upx' ./tools/Makefile
+sed -i '\/autoconf\/compile :=/i\$(curdir)/upx/compile := $(curdir)/ucl/compile' ./tools/Makefile
+svn co https://github.com/immortalwrt/immortalwrt/branches/master/tools/upx tools/upx
+svn co https://github.com/immortalwrt/immortalwrt/branches/master/tools/ucl tools/ucl
 #luci-app-compressed-memory
 #wget -O- https://patch-diff.githubusercontent.com/raw/openwrt/openwrt/pull/2840.patch | patch -p1
 wget -O- https://github.com/NoTengoBattery/openwrt/commit/40f1d5.patch | patch -p1
@@ -265,7 +270,11 @@ svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/ipv6-helper packa
 # svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-aliddns package/new/luci-app-aliddns
 #WOL
 # svn co https://github.com/sundaqiang/openwrt-packages/trunk/luci-app-services-wolplus package/new/luci-app-services-wolplus
-
+# V2Ray
+git clone -b master --depth 1 https://github.com/kuoruan/openwrt-v2ray.git package/new/v2ray-core
+git clone -b legacy --depth 1 https://github.com/kuoruan/luci-app-v2ray.git package/new/luci-app-v2ray
+# N2N
+svn co https://github.com/ntop/n2n/branches/2.8-stable/packages/openwrt package/new/n2n
 ##最后的收尾工作
 #Lets Fuck
 # mkdir package/base-files/files/usr/bin
