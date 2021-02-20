@@ -270,10 +270,6 @@ svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/ipv6-helper packa
 # svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-aliddns package/new/luci-app-aliddns
 #WOL
 # svn co https://github.com/sundaqiang/openwrt-packages/trunk/luci-app-services-wolplus package/new/luci-app-services-wolplus
-# V2Ray
-git clone -b master --depth 1 https://github.com/kuoruan/openwrt-upx.git package/new/openwrt-upx
-git clone -b master --depth 1 https://github.com/kuoruan/openwrt-v2ray.git package/new/v2ray-core
-git clone -b legacy --depth 1 https://github.com/kuoruan/luci-app-v2ray.git package/new/luci-app-v2ray
 # N2N
 svn co https://github.com/ntop/n2n/branches/2.8-stable/packages/openwrt package/new/n2n
 ##最后的收尾工作
