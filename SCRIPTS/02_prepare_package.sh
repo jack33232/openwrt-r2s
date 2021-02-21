@@ -22,43 +22,43 @@ wget -P target/linux/generic/pending-5.4 https://github.com/immortalwrt/immortal
 #patch jsonc
 patch -p1 < ../PATCH/new/package/use_json_object_new_int64.patch
 #patch dnsmasq
-patch -p1 < ../PATCH/new/package/dnsmasq-add-filter-aaaa-option.patch
-patch -p1 < ../PATCH/new/package/luci-add-filter-aaaa-option.patch
-cp -f ../PATCH/new/package/900-add-filter-aaaa-option.patch ./package/network/services/dnsmasq/patches/900-add-filter-aaaa-option.patch
-rm -rf ./package/base-files/files/etc/init.d/boot
-wget -P package/base-files/files/etc/init.d https://github.com/immortalwrt/immortalwrt/raw/openwrt-18.06-k5.4/package/base-files/files/etc/init.d/boot
+# patch -p1 < ../PATCH/new/package/dnsmasq-add-filter-aaaa-option.patch
+# patch -p1 < ../PATCH/new/package/luci-add-filter-aaaa-option.patch
+# cp -f ../PATCH/new/package/900-add-filter-aaaa-option.patch ./package/network/services/dnsmasq/patches/900-add-filter-aaaa-option.patch
+# rm -rf ./package/base-files/files/etc/init.d/boot
+# wget -P package/base-files/files/etc/init.d https://github.com/immortalwrt/immortalwrt/raw/openwrt-18.06-k5.4/package/base-files/files/etc/init.d/boot
 #（从这行开始接下来4个操作全是和fullcone相关的，不需要可以一并注释掉，但极不建议
 # Patch Kernel 以解决fullcone冲突
-pushd target/linux/generic/hack-5.4
-wget https://github.com/coolsnowwolf/lede/raw/master/target/linux/generic/hack-5.4/952-net-conntrack-events-support-multiple-registrant.patch
-popd
+# pushd target/linux/generic/hack-5.4
+# wget https://github.com/coolsnowwolf/lede/raw/master/target/linux/generic/hack-5.4/952-net-conntrack-events-support-multiple-registrant.patch
+# popd
 #Patch FireWall 以增添fullcone功能 
-mkdir package/network/config/firewall/patches
-wget -P package/network/config/firewall/patches/ https://github.com/immortalwrt/immortalwrt/raw/master/package/network/config/firewall/patches/fullconenat.patch
+# mkdir package/network/config/firewall/patches
+# wget -P package/network/config/firewall/patches/ https://github.com/immortalwrt/immortalwrt/raw/master/package/network/config/firewall/patches/fullconenat.patch
 # Patch LuCI 以增添fullcone开关
-patch -p1 < ../PATCH/new/package/luci-app-firewall_add_fullcone.patch
+# patch -p1 < ../PATCH/new/package/luci-app-firewall_add_fullcone.patch
 #FullCone 相关组件
-cp -rf ../openwrt-lienol/package/network/fullconenat ./package/network/fullconenat
+# cp -rf ../openwrt-lienol/package/network/fullconenat ./package/network/fullconenat
 #（从这行开始接下来3个操作全是和SFE相关的，不需要可以一并注释掉，但极不建议
 # Patch Kernel 以支援SFE
-pushd target/linux/generic/hack-5.4
-wget https://github.com/coolsnowwolf/lede/raw/master/target/linux/generic/hack-5.4/953-net-patch-linux-kernel-to-support-shortcut-fe.patch
-popd
+# pushd target/linux/generic/hack-5.4
+# wget https://github.com/coolsnowwolf/lede/raw/master/target/linux/generic/hack-5.4/953-net-patch-linux-kernel-to-support-shortcut-fe.patch
+# popd
 # Patch LuCI 以增添SFE开关
-patch -p1 < ../PATCH/new/package/luci-app-firewall_add_sfe_switch.patch
+# patch -p1 < ../PATCH/new/package/luci-app-firewall_add_sfe_switch.patch
 # SFE 相关组件
-svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/shortcut-fe package/lean/shortcut-fe
-svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/fast-classifier package/lean/fast-classifier
-cp -f ../PATCH/duplicate/shortcut-fe ./package/base-files/files/etc/init.d
+# svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/shortcut-fe package/lean/shortcut-fe
+# svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/fast-classifier package/lean/fast-classifier
+# cp -f ../PATCH/duplicate/shortcut-fe ./package/base-files/files/etc/init.d
 
 ##获取额外package
 #（不用注释这里的任何东西，这不会对提升action的执行速度起到多大的帮助
 #（不需要的包直接修改seed就好
 #upx
-sed -i '/patchelf pkgconf/i\tools-y += ucl upx' ./tools/Makefile
-sed -i '\/autoconf\/compile :=/i\$(curdir)/upx/compile := $(curdir)/ucl/compile' ./tools/Makefile
-svn co https://github.com/immortalwrt/immortalwrt/branches/master/tools/upx tools/upx
-svn co https://github.com/immortalwrt/immortalwrt/branches/master/tools/ucl tools/ucl
+# sed -i '/patchelf pkgconf/i\tools-y += ucl upx' ./tools/Makefile
+# sed -i '\/autoconf\/compile :=/i\$(curdir)/upx/compile := $(curdir)/ucl/compile' ./tools/Makefile
+# svn co https://github.com/immortalwrt/immortalwrt/branches/master/tools/upx tools/upx
+# svn co https://github.com/immortalwrt/immortalwrt/branches/master/tools/ucl tools/ucl
 #luci-app-compressed-memory
 #wget -O- https://patch-diff.githubusercontent.com/raw/openwrt/openwrt/pull/2840.patch | patch -p1
 wget -O- https://github.com/NoTengoBattery/openwrt/commit/40f1d5.patch | patch -p1
@@ -271,7 +271,11 @@ svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/ipv6-helper packa
 #WOL
 # svn co https://github.com/sundaqiang/openwrt-packages/trunk/luci-app-services-wolplus package/new/luci-app-services-wolplus
 # N2N
-# svn co https://github.com/ntop/n2n/branches/2.8-stable/packages/openwrt package/new/n2n
+svn co https://github.com/ntop/n2n/branches/2.8-stable/packages/openwrt package/new/n2n
+# V2Ray
+git clone -b master --depth 1 https://github.com/kuoruan/openwrt-upx.git package/new/openwrt-upx
+git clone -b master --depth 1 https://github.com/kuoruan/openwrt-v2ray.git package/new/v2ray-core
+git clone -b legacy --depth 1 https://github.com/kuoruan/luci-app-v2ray.git package/new/luci-app-v2ray
 ##最后的收尾工作
 #Lets Fuck
 # mkdir package/base-files/files/usr/bin
