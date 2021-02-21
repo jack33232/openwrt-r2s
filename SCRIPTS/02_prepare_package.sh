@@ -29,16 +29,16 @@ rm -rf ./package/base-files/files/etc/init.d/boot
 wget -P package/base-files/files/etc/init.d https://github.com/immortalwrt/immortalwrt/raw/openwrt-18.06-k5.4/package/base-files/files/etc/init.d/boot
 #（从这行开始接下来4个操作全是和fullcone相关的，不需要可以一并注释掉，但极不建议
 # Patch Kernel 以解决fullcone冲突
-# pushd target/linux/generic/hack-5.4
-# wget https://github.com/coolsnowwolf/lede/raw/master/target/linux/generic/hack-5.4/952-net-conntrack-events-support-multiple-registrant.patch
-# popd
+pushd target/linux/generic/hack-5.4
+wget https://github.com/coolsnowwolf/lede/raw/master/target/linux/generic/hack-5.4/952-net-conntrack-events-support-multiple-registrant.patch
+popd
 #Patch FireWall 以增添fullcone功能 
-# mkdir package/network/config/firewall/patches
-# wget -P package/network/config/firewall/patches/ https://github.com/immortalwrt/immortalwrt/raw/master/package/network/config/firewall/patches/fullconenat.patch
+mkdir package/network/config/firewall/patches
+wget -P package/network/config/firewall/patches/ https://github.com/immortalwrt/immortalwrt/raw/master/package/network/config/firewall/patches/fullconenat.patch
 # Patch LuCI 以增添fullcone开关
-# patch -p1 < ../PATCH/new/package/luci-app-firewall_add_fullcone.patch
+patch -p1 < ../PATCH/new/package/luci-app-firewall_add_fullcone.patch
 #FullCone 相关组件
-# cp -rf ../openwrt-lienol/package/network/fullconenat ./package/network/fullconenat
+cp -rf ../openwrt-lienol/package/network/fullconenat ./package/network/fullconenat
 #（从这行开始接下来3个操作全是和SFE相关的，不需要可以一并注释掉，但极不建议
 # Patch Kernel 以支援SFE
 pushd target/linux/generic/hack-5.4
@@ -271,7 +271,7 @@ svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/ipv6-helper packa
 #WOL
 # svn co https://github.com/sundaqiang/openwrt-packages/trunk/luci-app-services-wolplus package/new/luci-app-services-wolplus
 # N2N
-svn co https://github.com/ntop/n2n/branches/2.8-stable/packages/openwrt package/new/n2n
+# svn co https://github.com/ntop/n2n/branches/2.8-stable/packages/openwrt package/new/n2n
 ##最后的收尾工作
 #Lets Fuck
 # mkdir package/base-files/files/usr/bin
