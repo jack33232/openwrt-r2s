@@ -72,7 +72,8 @@ uci commit dhcp
 sed -i '/log-facility/d' /etc/dnsmasq.conf
 echo "log-facility=/dev/null" >> /etc/dnsmasq.conf
 
-#packet_steering
+#packet_steering & lan ipaddr
+uci set network.lan.ipaddr='192.168.31.1'
 uci set network.globals.packet_steering='1'
 uci commit network
 
