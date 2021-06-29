@@ -6,7 +6,7 @@ on:
       version:
         description: "Please provide the firmware's name"
         required: true
-        default: "snapshot"
+        default: "21.02-RC3"
 
 jobs:
 
@@ -73,27 +73,26 @@ jobs:
       - name: Prepare Mixedwrt
         run: |
           sudo chown -R runner:runner $GITHUB_WORKSPACE
-          cp -r ./SCRIPTS/R2S/. ./SCRIPTS/
           cp -r ./SCRIPTS/. ./
-          /bin/bash 01_get_ready.sh
+          /bin/bash get_ready.sh
       - name: Prepare Package
         run: |
           cd openwrt
           cp -r ../SCRIPTS/. ./
-          /bin/bash 02_prepare_package.sh
-          /bin/bash 02_target_only.sh
+          /bin/bash prepare_package.sh
+          /bin/bash target_only.sh
       - name: Convert Translation
         run: |
           cd openwrt
-          /bin/bash 03_convert_translation.sh
+          /bin/bash convert_translation.sh
       - name: Add ACL
         run: |
           cd openwrt
-          /bin/bash 05_create_acl_for_luci.sh -a
+          /bin/bash create_acl_for_luci.sh -a
       - name: Make Config
         run: |
           cd openwrt
-          mv ../SEED/R2S/config.seed .config
+          mv ../config.seed .config
           make defconfig
       - name: Smart chmod
         run: |
@@ -125,7 +124,7 @@ jobs:
         run: |
           df -h
           cd openwrt/bin/targets/rockchip/armv8
-          /bin/bash ${GITHUB_WORKSPACE}/SCRIPTS/06_cleaning.sh
+          /bin/bash ${GITHUB_WORKSPACE}/SCRIPTS/cleaning.sh
       - name: Print Disk Space After
         run: df -h
       - name: Assemble Artifact
