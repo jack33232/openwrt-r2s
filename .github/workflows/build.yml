@@ -107,38 +107,47 @@ jobs:
         run: |
           df -h
           cd openwrt
-          make download -j10
+          make download -j50
       - name: Make Toolchain
         run: |
           df -h
           cd openwrt
-          let make_process=$(nproc)+1
+          let make_process=$(nproc)+2
           make toolchain/install -j${make_process} V=s
       - name: Compile Openwrt
+        id: compileopenwrt
+        continue-on-error: true
         run: |
           df -h
           cd openwrt
-          let make_process=$(nproc)+1
-          make -j${make_process} V=s || make -j${make_process} V=s || make -j1 V=s
-      - name: Cleaning
+          let Make_Process=$(nproc)+2
+          make -j${Make_Process} V=w
+          echo $?
+      - name: If Error
+        if: steps.compileopenwrt.outcome == 'failure'
         run: |
-          df -h
-          cd openwrt/bin/targets/rockchip/armv8
-          /bin/bash ${GITHUB_WORKSPACE}/SCRIPTS/cleaning.sh
+          cat openwrt/.config
+          echo '================================================================'
+          cd openwrt && make -j1 V=s
       - name: Print Disk Space After
         run: df -h
-      - name: Assemble Artifact
-        id: assemble_artifact
+      - name: Organize files
+        id: organize
         run: |
           rm -rf ./artifact/
           mkdir -p ./artifact/
-          cp openwrt/bin/targets/rockchip/armv8/*squashfs-sysupgrade.img.gz ./artifact/
-          cd openwrt
-          cd ..
-          zip -r artifact.zip ./artifact/
-          echo '::set-output name=release_tag::R2S-${{ github.event.inputs.version }}'
-      - name: Upload Artifact
+          mv openwrt/bin/targets/rockchip/armv8/*sysupgrade.img* ./artifact/
+          cd ./artifact/
+          ls -Ahl
+          gzip -d *.gz && exit 0
+          gzip --best *.img
+          ls -Ahl
+          sha256sum openwrt*r2s* | tee R2S-GC404-$(date +%Y-%m-%d)-21.02.sha256sum
+          zip R2S-GC404-$(date +%Y-%m-%d)-21.02-ext4.zip *r2s*ext4*
+          zip R2S-GC404-$(date +%Y-%m-%d)-21.02-sfs.zip *r2s*squashfs*
+          ls -Ahl
+      - name: Upload artifact
         uses: actions/upload-artifact@main
         with:
-          name: ${{ steps.assemble_artifact.outputs.release_tag }}.zip
-          path: ./artifact.zip
+          name: OpenWRT_21.02
+          path: ./artifact/

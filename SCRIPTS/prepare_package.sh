@@ -91,8 +91,6 @@ git clone -b legacy --depth 1 https://github.com/kuoruan/luci-app-v2ray.git pack
 
 
 ### 收尾
-# 翻译及部分功能优化
-svn co https://github.com/QiuSimons/OpenWrt-Add/trunk/addition-trans-zh package/lean/lean-translate
 # 最大连接数
 sed -i 's/16384/65535/g' package/kernel/linux/files/sysctl-nf-conntrack.conf
 # 生成默认配置及缓存
